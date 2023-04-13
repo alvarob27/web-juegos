@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzle</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <link rel="icon" type="image/png" href="/images/puzzle.png">
+</head>
+<body class="h-screen bg-cover bg-center bg-fixed bg-no-repeat" style="background-image: url('images/wallpaperbetter.com_1920x1080\ \(6).jpg')"></body>
+   
+    <div  id="pantallaInicio"  onclick ="empezar()" class="bg-orange-500 h-44 ml-10 mr-10 border-2 border-black relative top-44 sm:ml-24 sm:mr-24
+    md:ml-32 md:mr-32 md:h-60 lg:ml-56 lg:mr-56  xl:ml-80 xl:mr-80"  style="display:block;">
+        <div class="bg-orange-400 font-bold flex justify-center h-10 pt-2 md:h-16 md:text-2xl md:pt-4">
+            ¡BIENVENIDO AL PUZZLE!
+        </div>
+        <div class="bg-orange-400 flex justify-center ml-20 mr-20 pt-2 pb-2 border-2 border-black relative top-10  cursor-pointer hover:bg-yellow-30
+        md:h-16 md:mt-3">
+            <p id="botonJugar" class=" font-bold h-max w-max sm:pt-0 md:text-2xl md:pt-2">JUGAR</p>
+        </div>
+    </div>
+
+    <div id="tab" class="flex justify-center h-fit pr-20" style="display:none">
+        <div id="tablero" class=" w-3/6 justify-center  ml-96">
+            <div id="fila1" class="flex justify-center ">
+                <div id="casilla1"  class="casilla flex bg-white w-32 h-24 mt-5 border-b-4 border-r-4 border-black" ondragover="allowDrop(event)" ondrop="drop1(event)">
+                </div>
+                <div id="casilla2"  class="casilla flex bg-white  w-32 h-24 mt-5 border-b-4  border-r-4 border-black" ondragover="allowDrop(event)" ondrop="drop2(event)">
+                </div>
+                <div id="casilla3" class="casilla flex bg-white  w-32 h-24 mt-5 border-b-4  border-black" ondragover="allowDrop(event)" ondrop="drop3(event)" >
+                </div>
+                <div id="casilla4" class="casilla flex bg-white  w-32 h-24 mt-5 border-l-4 border-b-4  border-black" ondragover="allowDrop(event)" ondrop="drop4(event)" >
+                </div>
+            </div>
+    
+            <div id="fila2" class="flex justify-center">
+                <div id="casilla5" class="casilla flex bg-white  w-32 h-24 border-b-4 border-r-4  border-black"  ondragover="allowDrop(event)" ondrop="drop5(event)">
+                </div>
+                <div id="casilla6" class="casilla flex bg-white  w-32 h-24 border-b-4 border-r-4  border-black"  ondragover="allowDrop(event)" ondrop="drop6(event)">
+                </div>
+                <div id="casilla7" class="casilla flex bg-white  w-32 h-24 border-b-4   border-black"  ondragover="allowDrop(event)" ondrop="drop7(event)">
+                </div>
+                <div id="casilla8" class="casilla flex bg-white  w-32 h-24 border-l-4 border-b-4  border-black"  ondragover="allowDrop(event)" ondrop="drop8(event)">
+                </div>
+            </div>
+            <div id="fila3" class="flex justify-center">
+                <div id="casilla9" class="casilla flex bg-white  w-32 h-24 border-r-4  border-black"  ondragover="allowDrop(event)" ondrop="drop9(event)">
+                </div>
+                <div id="casilla10" class="casilla flex bg-white  w-32 h-24  border-r-4 border-black"  ondragover="allowDrop(event)" ondrop="drop10(event)">
+                </div>
+                <div id="casilla11" class="casilla flex bg-white w-32 h-24   border-black"  ondragover="allowDrop(event)" ondrop="drop11(event)">
+                </div>
+                <div id="casilla12" class="casilla flex bg-white w-32 h-24 border-l-4   border-black"  ondragover="allowDrop(event)" ondrop="drop12(event)">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="imgs" class="flex justify-center mt-8 ml-32 pl-80"  style="display:none">
+        <div class="w-3/4 space-x-5 space-y-5 ">
+            
+            <div class="flex flex-row space-x-5 pl-5 ">
+              
+                <div  class="w-32 h-24 bg-gray-200">
+                    <img id="imagen4" alt="image4" draggable="true" src="/imageonline/30.jpeg" class="h-full w-full" style="cursor:move"  ondragstart="drag(event)">
+                </div>
+                <div  class="w-32 h-24 bg-gray-200">
+                    <img  id="imagen2" alt="image2" draggable="true" src="/imageonline/10.jpeg" class="h-full w-full" style="cursor:move"  ondragstart="drag(event)">
+                </div>
+                <div  class="w-32 h-24 bg-gray-200">
+                    <img id="imagen1" alt="image1" src="/imageonline/00.jpeg" class="h-full w-full" style="cursor:move"  ondragstart="drag(event)">
+                </div>
+                <div  class="w-32 h-24 bg-gray-200">
+                    <img id="imagen3" alt="image3" draggable="true" src="/imageonline/20.jpeg" class="h-full w-full" style="cursor:move"  ondragstart="drag(event)">
+                </div>
+                
+            
+            </div>
+            
+            <div class="flex flex-row space-x-5 ">
+                
+                <div  class="w-32 h-24 bg-gray-200">
+                    <img id="imagen8" alt="image8" draggable="true" src="/imageonline/31.jpeg" class="h-full w-full" style="cursor:move" ondragstart="drag(event)">
+                </div>
+                <div  class="w-32 h-24 bg-gray-200">
+                    <img  id="imagen6" alt="image6" draggable="true" src="/imageonline/11.jpeg" class="h-full w-full" style="cursor:move" ondragstart="drag(event)">
+                </div>
+                <div  class="w-32 h-24 bg-gray-200">
+                    <img id="imagen7" alt="image7" draggable="true" src="/imageonline/21.jpeg" class="h-full w-full" style="cursor:move" ondragstart="drag(event)">
+                </div>
+                <div  class="w-32 h-24 bg-gray-200">
+                    <img id="imagen5" alt="image5" draggable="true" src="/imageonline/01.jpeg" class="h-full w-full" style="cursor:move" ondragstart="drag(event)">
+                </div>
+            
+            </div>
+            
+            <div  class="flex flex-row space-x-5">
+                
+                <div  class="w-32 h-24 bg-gray-200">
+                    <img id="imagen9" alt="image9" draggable="true" src="/imageonline/02.jpeg" class="h-full w-full" style="cursor:move" ondragstart="drag(event)">
+                  </div>
+                  <div  class="w-32 h-24 bg-gray-200">
+                    <img id="imagen12" alt="image11" draggable="true" src="/imageonline/32.jpeg" class="h-full w-full" style="cursor:move" ondragstart="drag(event)">
+                  </div>
+                  <div  class="w-32 h-24 bg-gray-200">
+                    <img id="imagen10" alt="image10" draggable="true" src="/imageonline/12.jpeg" class="h-full w-full" style="cursor:move" ondragstart="drag(event)">
+                  </div>
+                  <div  class="w-32 h-24 bg-gray-200">
+                    <img id="imagen11" alt="image11" draggable="true" src="/imageonline/22.jpeg" class="h-full w-full" style="cursor:move" ondragstart="drag(event)">
+                  </div>
+                  
+
+            </div>
+          
+        </div>
+    </div>
+       
+
+    <div id="fin" class="bg-orange-500 h-52 ml-8 mr-8 border-2 border-black relative top-44 sm:ml-32 sm:mr-32 sm:h-64 lg:ml-48 lg:mr-96 xl:ml-96 xl:mr-80" style="display:none;">
+        <div class="bg-orange-400 font-bold flex justify-center h-10 pt-2 text-white sm:h-14 sm:pt-3 sm:text-xl">
+          ¡HAS GANADO!
+        </div>
+        <div onclick="inicio()" id="divBoton" class="flex items-center justify-center h-fit pt-14 ">
+          <button class="bg-orange-400 text-white py-2 px-4 rounded h-16 w-32 mx-auto font-semibold hover:bg-cyan-400">VOLVER</button>
+        </div>
+    </div>
+    
+    <audio src="/audio/puzzlemusica.mp3" autoplay id="musica"></audio>
+
+        
+<script>
+
+    musica.volume=0.2
+
+    function empezar(){
+        pantallaInicio.style.display="none";
+        tab.style.display = "block";
+        imgs.style.display = "block";
+
+    }
+   
+    //PANTALLA DE VUELTA A INCIO
+    const divBoton = document.getElementById("divBoton");
+    function inicio(){
+        document.addEventListener("click", function(){
+        window.location.href = "index.html";
+        })
+    }
+    function finalizar(){
+        fin.style.display = "block";
+        imgs.style.display = "none";
+        tab.style.display = "none";
+    }
+    fin.style.display = "none";
+    
+    //DEFINIMOS CASILLAS
+    const casilla1 = document.getElementById("casilla1");
+    const casilla2 = document.getElementById("casilla2");
+    const casilla3 = document.getElementById("casilla3");
+    const casilla4 = document.getElementById("casilla4");
+    const casilla5 = document.getElementById("casilla5");
+    const casilla6= document.getElementById("casilla6");
+    const casilla7 = document.getElementById("casilla7");
+    const casilla8 = document.getElementById("casilla8");
+    const casilla9 = document.getElementById("casilla9");
+    const casilla10 = document.getElementById("casilla10");
+    const casilla11 = document.getElementById("casilla11");
+    const casilla12 = document.getElementById("casilla12");
+
+    //DEFINIMOS IMAGENES
+    const imagen1 = document.getElementById("imagen1");
+    const imagen2 = document.getElementById("imagen2");
+    const imagen3 = document.getElementById("imagen3");
+    const imagen4 = document.getElementById("imagen4");
+    const imagen5 = document.getElementById("imagen5");
+    const imagen6 = document.getElementById("imagen6");
+    const imagen7 = document.getElementById("imagen7");
+    const imagen8 = document.getElementById("imagen8");
+    const imagen9 = document.getElementById("imagen9");
+    const imagen10 = document.getElementById("imagen10");
+    const imagen11 = document.getElementById("imagen11");
+    const imagen12 = document.getElementById("imagen12");
+    
+    //DEFINIMOS ARRAY PARA DESORDENAR IMAGENES
+    const arrayImagenes = [0,1,2,3,4,5,6,7,8,9,10,11];
+    const arrayImagenesRepes = [];
+    // AGREGAMOS ELEMENTOS DE ARRASTRAR Y SOLTAR
+
+    //ELEMENTOS DE EMPIECE DE ARRASTRE
+    imagen1.addEventListener("dragstart", drag);
+    imagen2.addEventListener("dragstart", drag);
+    imagen3.addEventListener("dragstart", drag);
+    imagen4.addEventListener("dragstart", drag);
+    imagen5.addEventListener("dragstart", drag);
+    imagen6.addEventListener("dragstart", drag);
+    imagen7.addEventListener("dragstart", drag);
+    imagen8.addEventListener("dragstart", drag);
+    imagen9.addEventListener("dragstart", drag);
+    imagen10.addEventListener("dragstart", drag);
+    imagen11.addEventListener("dragstart", drag);
+    imagen12.addEventListener("dragstart", drag);
+
+    //ELEMENTOS DE PASAR POR ENCIMA
+    casilla1.addEventListener("dragover", allowDrop);
+    casilla2.addEventListener("dragover", allowDrop);
+    casilla3.addEventListener("dragover", allowDrop);
+    casilla4.addEventListener("dragover", allowDrop);
+    casilla5.addEventListener("dragover", allowDrop);
+    casilla6.addEventListener("dragover", allowDrop);
+    casilla7.addEventListener("dragover", allowDrop);
+    casilla8.addEventListener("dragover", allowDrop);
+    casilla9.addEventListener("dragover", allowDrop);
+    casilla10.addEventListener("dragover", allowDrop);
+    casilla11.addEventListener("dragover", allowDrop);
+    casilla12.addEventListener("dragover", allowDrop);
+
+    //ELEMENTOS DE DROP(SOLTAR)
+    casilla1.addEventListener("drop", drop1);
+    casilla2.addEventListener("drop", drop2);
+    casilla3.addEventListener("drop", drop3);
+    casilla4.addEventListener("drop", drop4);
+    casilla5.addEventListener("drop", drop5);
+    casilla6.addEventListener("drop", drop6);
+    casilla7.addEventListener("drop", drop7);
+    casilla8.addEventListener("drop", drop8);
+    casilla9.addEventListener("drop", drop9); 
+    casilla10.addEventListener("drop", drop10);
+    casilla11.addEventListener("drop", drop11);
+    casilla12.addEventListener("drop", drop12);
+
+    function drag(event) {
+        event.dataTransfer.setData("text", event.target.id);
+    }
+
+    function allowDrop(event) {
+        event.preventDefault();
+    }
+
+    function drop1(event) {
+        event.preventDefault();
+        var data = event.dataTransfer.getData("text");
+        if (data === "imagen1") {
+        casilla1.appendChild(document.getElementById(data));
+        arrayImagenesRepes.push(0);
+        console.log(arrayImagenesRepes);
+        if(arrayImagenesRepes.length === 24){
+            finalizar();
+        }
+    }
+    } 
+    function drop2(event) {
+        event.preventDefault();
+        var data = event.dataTransfer.getData("text");
+        if (data === "imagen2") {
+        casilla2.appendChild(document.getElementById(data));
+        arrayImagenesRepes.push(1);
+        console.log(arrayImagenesRepes);
+        if(arrayImagenesRepes.length  === 24){
+            finalizar();
+        }
+        }
+    } 
+    function drop3(event) {
+        event.preventDefault();
+        var data = event.dataTransfer.getData("text");
+        if (data === "imagen3") {
+        casilla3.appendChild(document.getElementById(data));
+        arrayImagenesRepes.push(2);
+        console.log(arrayImagenesRepes);
+        if(arrayImagenesRepes.length  === 24){
+            finalizar();
+        }
+        }
+    } 
+    function drop4(event) {
+        event.preventDefault();
+        var data = event.dataTransfer.getData("text");
+        if (data === "imagen4") {
+        casilla4.appendChild(document.getElementById(data));
+        arrayImagenesRepes.push(3);
+        console.log(arrayImagenesRepes);
+        if(arrayImagenesRepes.length  === 24){
+            finalizar();
+        }
+        }
+    } 
+    function drop5(event) {
+        event.preventDefault();
+        var data = event.dataTransfer.getData("text");
+        if (data === "imagen5") {
+        casilla5.appendChild(document.getElementById(data));
+        arrayImagenesRepes.push(4);
+        console.log(arrayImagenesRepes);
+        if(arrayImagenesRepes.length  === 24){
+            finalizar();
+        }
+       
+        }
+    }
+    function drop6(event) {
+        event.preventDefault();
+        var data = event.dataTransfer.getData("text");
+        if (data === "imagen6") {
+        casilla6.appendChild(document.getElementById(data));
+        arrayImagenesRepes.push(5);
+        console.log(arrayImagenesRepes);
+        if(arrayImagenesRepes.length  === 24){
+            finalizar();
+        }
+
+        }
+    }
+    function drop7(event) {
+        event.preventDefault();
+        var data = event.dataTransfer.getData("text");
+        if (data === "imagen7") {
+        casilla7.appendChild(document.getElementById(data));
+        arrayImagenesRepes.push(6);
+        console.log(arrayImagenesRepes);
+        if(arrayImagenesRepes.length  === 24){
+            finalizar();
+        }
+        }
+    }
+    function drop8(event) {
+        event.preventDefault();
+        var data = event.dataTransfer.getData("text");
+        if (data === "imagen8") {
+        casilla8.appendChild(document.getElementById(data));
+        arrayImagenesRepes.push(7);
+        console.log(arrayImagenesRepes);
+        if(arrayImagenesRepes.length  === 24){
+            finalizar();
+        }
+        }
+    }  
+    function drop9(event) {
+        event.preventDefault();
+        var data = event.dataTransfer.getData("text");
+        if (data === "imagen9") {
+          casilla9.appendChild(document.getElementById(data));
+          arrayImagenesRepes.push(8);
+          console.log(arrayImagenesRepes);
+          if(arrayImagenesRepes.length  === 24){
+            finalizar();
+        }
+        }
+      }      
+      
+      function drop10(event) {
+        event.preventDefault();
+        var data = event.dataTransfer.getData("text");
+        if (data === "imagen10") {
+          casilla10.appendChild(document.getElementById(data));
+          arrayImagenesRepes.push(9);
+          console.log(arrayImagenesRepes);
+          if(arrayImagenesRepes.length  === 24){
+            finalizar();
+        }
+        }
+      } 
+      
+      function drop11(event) {
+        event.preventDefault();
+        var data = event.dataTransfer.getData("text");
+        if (data === "imagen11") {
+          casilla11.appendChild(document.getElementById(data));
+          arrayImagenesRepes.push(10);
+          console.log(arrayImagenesRepes);
+          if(arrayImagenesRepes.length  === 24){
+            finalizar();
+        }
+        }
+      }   
+      
+      function drop12(event) {
+        event.preventDefault();
+        var data = event.dataTransfer.getData("text");
+        if (data === "imagen12"){
+            casilla12.appendChild(document.getElementById(data));
+            arrayImagenesRepes.push(11);
+            if(arrayImagenesRepes.length  === 24){
+                finalizar();
+            }
+            
+        }
+    } 
+    
+  
+    </script>
+     
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahorcado</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+</head>
+<body>
+
+    <div id="pantallaInicial" class="bg-cover bg-center bg-fixed bg-no-repeat h-screen" style="background-image: url('images/wallpaperbetter.com_1920x1080\ \(6).jpg')">
+    <div id="juegoInicial" class="bg-cover bg-center bg-fixed bg-no-repeat h-2/6 w-1/5 mx-auto border-2 border-black relative top-60" style="background-image: url('images/wallpaperbetter.com_1920x1080\ \(12\).jpg')">
+        <div>
+        <h1 class="font-bold font-serif text-2xl text-center bg-black text-white">EL AHORCADO</h1><br><br>
+        </div>
+        <div class="text-center">
+        <button id="boton1" onclick="empezarJuego()" class="bg-slate-700 hover:bg-black text-white font-bold py-2 px-4 rounded" >Jugar</button><br><br>
+    </div>
+    </div>
+    </div>
+
+
+    <div id="pantallaJuego" class=" bg-cover bg-center bg-fixed bg-no-repeat h-screen hidden" style="background-image: url('images/wallpaperbetter.com_1920x1080\ \(6\).jpg')">
+    <div id="Juego" class="bg-cover bg-center bg-fixed bg-no-repeat h-4/6 w-2/5 mx-auto border-2 border-black relative top-36 hidden" style="background-image: url('images/wallpaperbetter.com_1920x1080\ \(12\).jpg')">
+        <div>
+       <h1 class="font-bold font-serif text-2xl text-center bg-black text-white" >EL AHORCADO</h1><br><br>
+        </div>
+       <div class="text-center">
+       <input id="letra" type="text" placeholder="Dame una letra" maxlength="1">
+       <button id="boton2" onclick="comprobarLetraUsuario()" class="bg-slate-700 hover:bg-black text-white font-bold py-2 px-4 rounded">Comprobar</button><br><br>
+       <p class="pl-5 text-lg">Palabra a adivinar: </p>
+       <div id="palabra" class="text-3xl"></div>
+       </div><br>
+       <h2 class="pl-5 text-xl">Intentos:</h2>
+       <div id="intentos" class="pl-12 text-xl "></div><br><br>
+        <h2 class="pl-5 text-xl">Historial:</h2>
+        <div id="historial" class="pl-10 text-xl"></div>
+        <canvas id="ahorcado" class="relative left-96 bottom-36" width="200" height="200"></canvas>
+    </div>
+</div>
+
+
+
+<script>
+
+            
+            //======================================================================
+            // VARIABLES
+            //======================================================================
+
+            const listaPalabras = ['rodaballo', 'mariquita', 'calabacin', 'espialidisticoespialidoso'];
+            var palabraAdivinar = [];
+            var palabraMostrar = [];
+            var letras_adivinadas = [];
+            var historialLetrasUsuario = [];
+
+            var numIntentos = 6;
+
+            var nodoLetra = document.getElementById('letra');
+            var nodoBoton = document.getElementById('boton');
+            var nodoPalabra = document.getElementById('palabra');
+            var nodoIntentos = document.getElementById('intentos');
+            var nodoHistorial = document.getElementById('historial');
+            
+
+            //======================================================================
+            // FUNCIONES
+            //======================================================================
+            function empezarJuego(){
+
+                let pantallaInicial = document.getElementById('pantallaInicial');
+                let juegoInicial = document.getElementById('juegoInicial');
+
+                let pantallaJuego = document.getElementById('pantallaJuego');
+                let Juego = document.getElementById('Juego');
+
+                pantallaInicial.classList.add('hidden');
+                juegoInicial.classList.add('hidden');
+
+                pantallaJuego.classList.remove('hidden');
+                Juego.classList.remove('hidden');
+
+                prepararJuego();
+
+            }
+            function prepararJuego() {
+            // 1 Se obtiene una posición aleatoria de listaPalabras
+            var posAleatoriaListaPalabras = Math.floor(Math.random() * listaPalabras.length);
+
+            // 1.2 Obtengo la palabra aleatoria basándome en la posición aleatoria (posAleatoriaListaPalabras)
+            var palabraAleatoria = listaPalabras[posAleatoriaListaPalabras];
+
+            // 1.3 Separo la palabra en letras y lo guardo
+            palabraAdivinar = palabraAleatoria.split('');
+
+            // 2 Preparo el array que va a ver el usuario. Tendrá el mismo número de guiones que letras en palabraAdivinar
+            palabraMostrar = [];
+            for (let letra of palabraAdivinar) {
+                palabraMostrar.push('_');
+            }
+
+            // 3 Reinicio los intentos y el historial de letras adivinadas
+            numIntentos = 6;
+            historialLetrasUsuario = [];
+
+            // 4 Llamamos a dibujarJuego
+            dibujarJuego();
+
+            var canvas = document.getElementById('ahorcado');
+            var ctx = canvas.getContext('2d');
+            // Base
+            ctx.moveTo(20, 180);
+            ctx.lineTo(100, 180);
+            ctx.stroke();
+
+            // Mastil
+            ctx.moveTo(50, 180);
+            ctx.lineTo(50, 20);
+            ctx.stroke();
+
+            // Travesaño
+            ctx.moveTo(150, 20);
+            ctx.lineTo(50, 20);
+            ctx.stroke();
+
+            // Cuerda
+            ctx.moveTo(150, 50);
+            ctx.lineTo(150, 20);
+            ctx.stroke();
+            }
+
+            function dibujarJuego () {
+                // Convertimos un array en un texto, separado por espacios, y lo mostramos en el div resultado
+                nodoPalabra.innerHTML = palabraMostrar.join(' ');
+
+                // Mostramos los intentos
+                nodoIntentos.innerHTML = numIntentos;
+                
+                // Mostramos el historial de letras
+                nodoHistorial.innerHTML = historialLetrasUsuario.join(' ');
+            }
+
+            function comprobarLetraUsuario () {
+                //// 1 Sustituye los guiones por la letra acertada
+                // Guardo la letra del input que ha escrito el usuario en una variable
+                var letraUsuario = nodoLetra.value;
+
+                // Vaciamos el input para que el usuario pueda volver a escribir
+                nodoLetra.value = '';
+
+                // Le devolvemos el foco al input para que pueda introducir otra letra
+                nodoLetra.focus();
+
+                if (historialLetrasUsuario.includes(letraUsuario)) {
+                alert("Ya has introducido la letra '" + letraUsuario.toUpperCase() + "' antes.");
+                return;
+                }
+                else if(letras_adivinadas.includes(letraUsuario)){
+                alert("Ya has introducido la letra '" + letraUsuario.toUpperCase() + "' antes.");
+                return;
+                }
+                else if(letraUsuario.trim() === ''){
+                    alert("No puedes introducir un caracter en blanco");
+                    return;
+                }
+
+                // Recorremos todas las letras para saber si alguna esta bien
+                for (const [posicion, letraAdivinar] of palabraAdivinar.entries()) {
+
+                    // Comprobamos si la letra del usuario es igual a la letra a adivinar
+                    if (letraUsuario == letraAdivinar) {
+
+                        // Sustituimos el guion por la letra acertada
+                        palabraMostrar[posicion] = letraAdivinar;
+                        letras_adivinadas.push(letraUsuario);
+                    }
+                }
+                //// 2 Comprobamos si se ha equivocado
+                // ¿No esta la letra?
+                if (!palabraAdivinar.includes(letraUsuario)) {
+                    // Restamos un intento
+                    numIntentos -= 1;
+                    // Guardamos en el historial la letra pulsada por el usuario
+                    if(!historialLetrasUsuario.includes(letraUsuario)){
+                        historialLetrasUsuario.push(letraUsuario);
+                    }
+                    var canvas = document.getElementById('ahorcado');
+                    var ctx = canvas.getContext('2d');
+        switch (numIntentos) {
+               // Cabeza
+                case 5:
+                    // Cabeza
+                    ctx.beginPath();
+                    ctx.arc(150, 70, 20, 0, Math.PI*2);
+                    ctx.stroke();
+                    break;
+                // Cuerpo
+                case 4:
+                ctx.moveTo(150, 90);
+                ctx.lineTo(150, 130);
+                ctx.stroke();
+                    break;
+                // Brazo izquierdo
+                case 3:
+                ctx.moveTo(120, 100);
+                ctx.lineTo(150, 110);
+                ctx.stroke();
+                    break;
+                // Brazo derecho
+                case 2:
+                ctx.moveTo(180, 100);
+                ctx.lineTo(150, 110);
+                ctx.stroke();
+                    break;
+                // Pierna izquierda
+                case 1:
+                ctx.moveTo(135, 160);
+                ctx.lineTo(150, 130);
+                ctx.stroke();
+                    break;
+                case 0:
+                // Pierna derecha
+                ctx.moveTo(165, 160);
+                ctx.lineTo(150, 130);
+                ctx.stroke();
+                    break;
+                }
+            }
+                //// 3 Comprobamos si hay que terminar el juego
+                acabarJuego();
+                //// 4 Mostramos los cambios
+                dibujarJuego();
+            }
+
+            function acabarJuego () {
+                // Ha ganado: ¿Le queda guiones al jugador?
+               
+                if (!palabraMostrar.includes('_')) {
+                    alert('Has ganado!!!');
+                    // Refrescamos la página para volver a jugar
+                    location.reload(true);
+                }
+
+                // Ha perdido: ¿Tiene 0 intentos?
+                if (numIntentos == 0) {
+                    alert('Has Perdido!!! Era: ' + palabraAdivinar.join(''));
+                    // Refrescamos la página para volver a jugar
+                    location.reload(true);
+                }
+            }
+
+
+
+</script>
+    
+</body>
+</html>

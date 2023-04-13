@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TriviaGame</title>
+    <link rel="shortcut icon" href="/images/triviaCrack.png">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <link rel="icon" type="image/png" href="/images/triviaCrack.png">
+</head>
+<body class="h-screen bg-cover bg-center bg-fixed bg-no-repeat" style="background-image: url('images/wallpaperbetter.com_1920x1080\ \(6).jpg')">
+    
+ <div  id="pantallaInicio" onclick="empezar()" class="bg-purple-500 h-44 ml-10 mr-10 border-2 border-black relative top-44 sm:ml-24 sm:mr-24
+        md:ml-32 md:mr-32 md:h-60 lg:ml-56 lg:mr-56  xl:ml-80 xl:mr-80"  style="display:block;">
+        <div class="bg-purple-700 font-bold flex justify-center text-white h-10 pt-2 md:h-16 md:text-2xl md:pt-4">
+            ¡BIENVENIDO AL TRIVIA!
+        </div>
+        <div class="bg-purple-500 hover:bg-purple-700 flex justify-center ml-20 mr-20 pt-2 pb-2 border-2 border-black relative top-10  cursor-pointer hover:bg-yellow-30
+        md:h-16 md:mt-3">
+            <p id="botonJugar" class=" font-bold h-max w-max sm:pt-0 md:text-2xl md:pt-2">JUGAR</p>
+        </div>
+    </div>
+    
+
+    <div id="juegoPrincipal" style="display:none;" class="border-2 border-black mt-10 ml-4 mr-4 sm:ml-20 sm:mr-20 lg:mr-32 lg:ml-44 xl:mr-96 xl:ml-96" > 
+
+        <div  class="bg-purple-500 h-5/6 flex justify-center" >
+            <div id="preguntas" class="bg-purple-500 w-60 h-12">
+                <p class="pt-3 flex justify-center font-bold text-lg md:text-2xl md:pt-2 text-white">TRIVIA GAME</p>
+            </div>
+           
+        </div>
+    
+        <div class="bg-indigo-700 h-max ">
+            <div id="preguntaJuego" class=" h-16 pt-2 pl-1 pr-1 text-center font-bold  ">
+                <p id="pregunta" class="pt-1 md:pt-0 md:text-xl lg:pt-2 text-white">Aqui va la pregunta</p>
+            </div>
+        </div>
+
+        <div id="divRespuestas" class=" bg-indigo-800 h-80 pt-3 md:pt-5 md:h-96 " >
+
+            <div id="respuesta1" class="bg-cyan-500 font-semibold justify-center text-center h-14 mt-2 pt-3 hover:cursor-pointer hover:bg-blue-500 
+            md:h-16 md:pt-4 md:mt-2  ">
+                <p class="md:text-lg lg:text-xl">Hola</p>
+            </div>
+            <div id="respuesta2" class="bg-cyan-500 font-semibold justify-center text-center  h-14 mt-5 pt-3 hover:cursor-pointer hover:bg-blue-500
+            md:h-16 md:pt-4">
+                <p class="md:text-lg lg:text-xl" >Hola</p>
+            </div>
+            <div  id="respuesta3" class="bg-cyan-500 font-semibold justify-center text-center  h-14 mt-5 pt-3  hover:cursor-pointer hover:bg-blue-500
+            md:h-16 md:pt-4">
+                <p class="md:text-lg lg:text-xl">Hola</p>
+            </div>
+            <div  id="respuesta4" class="bg-cyan-500 font-semibold justify-center text-center  h-14 mt-5 pt-3  hover:cursor-pointer hover:bg-blue-500
+            md:h-16 md:pt-4">
+                <p class="md:text-lg lg:text-xl">Hola</p> 
+            </div>
+          
+            
+        </div>
+
+        <div id="divTiempo" class="bg-purple-500 h-14 flex justify-center sm:h-16 md:h-20 ">
+            <div  class="bg-white mr-5 w-40 pl-8 pt-1">
+                <p class="font-bold sm:pl-4 md:text-xl md:pl-2 lg:text-2xl lg:pl-0 ">PUNTOS</p>
+                <div id="puntos" class="pl-10 font-bold md:text-xl md:pl-11 lg:pt-0 lg:pl-10 lg:text-2xl">
+                    <p>1</p>
+                </div>
+            </div>
+            <div class="bg-white w-40 pl-8 pt-1">
+                <p class="font-bold sm:pl-4 md:text-xl md:pl-3  lg:text-2xl lg:pl-0">TIEMPO</p>
+                <div id="tiempo" class="pl-10 font-bold md:text-xl md:pl-11 lg:pt-0 lg:pl-10 lg:text-2xl">
+                    <p>1</p>
+                </div>
+            </div>
+           
+        </div>
+
+        <audio src="/audio/musicaFondo.mp3" autoplay id="musica"></audio>
+        <audio src="/audio/error.mp3" autoplay id="fallo" ></audio>
+        <audio src="/audio/sonidoAcierto.mp3" autoplay id="acierto"></audio>
+    </div>
+   
+    <div id="fin" class="bg-purple-500 h-fit ml-8 mr-8 border-r-2 border-t-2 border-l-2 border-black relative top-44 sm:ml-32 sm:mr-32 sm:h-64 lg:ml-48 lg:mr-96 xl:ml-96 xl:mr-80" style="display:none;">
+        <div class="bg-purple-700 font-bold flex justify-center h-10 pt-2 sm:h-14 sm:pt-3 sm:text-xl">
+          ¡EL JUEGO HA TERMINADO!
+        </div>
+        <div class="flex mt-7 ml-2 mr-4 justify-center ">
+          <div class="bg-white flex flex-col justify-center ml-2 w-20 h-24 border-2 border-black relative  cursor-pointer  sm:h-36 sm:w-36">
+            <div class=" ">
+              <p class="flex justify-center h-10 pt-3 font-bold text-md sm:text-xl">PUNTOS</p>
+              <p id="puntosFinal" class="flex justify-center h-10 font-bold text-lg sm:text-xl">1</p>
+            </div>
+          </div>
+          <div class="bg-green-500 flex flex-col justify-center ml-2 w-20 h-24 border-2 border-black relative  cursor-pointer  sm:h-36 sm:w-36">
+            <div class=" ">
+              <p class="flex justify-center h-10 pt-3 font-bold text-md sm:text-xl">ACIERTOS</p>
+              <p id="aciertos" class="flex justify-center h-10 font-bold text-lg sm:text-xl">1</p>
+            </div>
+          </div>
+          <div class="bg-red-500 flex flex-col justify-center ml-2 w-20 h-24 border-2 border-black relative  cursor-pointer sm:h-36 sm:w-36">
+            <div class=" ">
+              <p class="flex justify-center h-10 pt-3 font-bold text-md sm:text-xl">FALLOS</p>
+              <p id="fallos" class="flex justify-center h-10 font-bold text-lg sm:text-xl">1</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-center mt-8">
+            <div onclick="inicio()" id="divBoton" class="flex items-center justify-center h-fit pt-5 ">
+                <button class="bg-blue-500 text-white py-2 px-4 rounded h-16 w-32 mx-auto font-semibold hover:bg-purple-400">VOLVER</button>
+            </div>
+        </div>
+      </div>
+      
+
+
+    <script>
+        
+        musica.volume = 0.4;    //Le damos un volumen inicial a la música de 0.4
+
+        function inicio(){
+            document.addEventListener("click", function(){
+            window.location.href = "index.html";
+            })
+        }
+        
+        function empezar (){    //Funcion de inicio del programa que oculta el menú de bienvenida y visibiliza el del juego
+            
+            pantallaInicio.style.display = 'none';
+            juegoPrincipal.style.display = 'block';
+            musica.play();
+       
+        }
+
+        function finalizar(){   //Funcion de finalización del programa que oculta el juego y visibiliza el menú de finalización
+
+            pantallaInicio.style.display = 'none';
+            juegoPrincipal.style.display = 'none';
+            fin.style.display = 'block';
+
+        }
+
+        //DECLARACION DE LAS RESPUESTAS
+        const divRespuesta1 = document.getElementById("respuesta1");
+        const divRespuesta2 = document.getElementById("respuesta2");
+        const divRespuesta3 = document.getElementById("respuesta3");
+        const divRespuesta4 = document.getElementById("respuesta4");
+
+        //ARRAYS CON PREGUNTAS
+        const arrayPreguntas = [
+        ["¿Cuál es la capital de España?", "Madrid", "París", "Barcelona", "Segovia"],
+        ["¿En qué año se suicidó Van Gogh?","2010","1890","1900","1860"],
+        ["¿Quién escribió 'Romancero Gitano'?" , "Salvador Dalí", "Fernando de Rojas", "Federico García Lorca","Miguel Angel"],
+        ["¿Cómo se llama el estudio de los alimentos?","Botánica","Alimentudio","Zoología","Bromatología"],
+        ["¿De qué están formadas las estrellas?","De Hidrógeno y Ozono", "De Hidrógeno y Oxígeno" ,"De Hidrógeno y Helio", "De Helio y Ozono"],
+        ["¿Quién fue el primer equipo en llevar dorsales en la liga Española?","Real Madrid", "Barcelona","Bilbao","Valencia"],
+        ["¿De qué equipo procedía Louis Van Gaal antes de entrenar al Barça?", "Man.United", "Ajax", "PSV", "AZ"],
+        ["¿Cómo se llama el vocalista de los Guns 'N' Roses?","Richard Fortus", "Izzy Stradlin" , "Slash", "Axl Rose"],
+        ["¿En qué año se estrenó la película de Disney 'Pinocho'?","1940","1941","1942","1943"],
+        ["¿Qué tortuga llevaba el pañuelo azul en 'Las tortugas ninja'?","Donatello","Leonardo","Michelangelo","Rafael"]
+        ];
+        
+        //ARRAY VACIO QUE SERVIRÁ PARA ALMACENAR LAS PREGUNTAS Y COMPARARLAS CON LAS ORIGINALES
+        const arrayPreguntasRepes = [];
+        
+        //ARRAY CON LAS PREGUNTAS CORRECTAS
+        const arrayCorrecto = [arrayPreguntas[0][1], arrayPreguntas[1][2], arrayPreguntas [2][3],
+        arrayPreguntas [3][4], arrayPreguntas [4][3], arrayPreguntas [5][3], arrayPreguntas [6][2], arrayPreguntas [7][4],
+        arrayPreguntas [8][1], arrayPreguntas [9][2] ]
+        
+        //FUNCION NUMERO RANDOM QUE CALCULARA UN NUM RANDOM PARA DETERMINAR QUE PREGUNTA + RESPUESTAS SALEN
+        function numeroRandom(){
+            
+            var numero = Math.floor(Math.random()*10)+1;    
+        
+            if (arrayPreguntasRepes.includes(numero)){          //Si el array incluye el numero que saque otras preg+resp diferentes
+                numeroRandom(); 
+            }else{
+                if (numero == 1){
+                    document.getElementById("pregunta").innerHTML = arrayPreguntas[0][0];
+                    document.getElementById("respuesta1").innerHTML = arrayPreguntas[0][1];
+                    document.getElementById("respuesta2").innerHTML = arrayPreguntas[0][2];
+                    document.getElementById("respuesta3").innerHTML = arrayPreguntas[0][3];
+                    document.getElementById("respuesta4").innerHTML = arrayPreguntas[0][4];
+                    arrayPreguntasRepes.push(numero);           //Sube el numero al array
+                   
+                   
+                }else if (numero == 2){
+                    document.getElementById("pregunta").innerHTML = arrayPreguntas[1][0];
+                    document.getElementById("respuesta1").innerHTML = arrayPreguntas [1][1];
+                    document.getElementById("respuesta2").innerHTML = arrayPreguntas [1][2];
+                    document.getElementById("respuesta3").innerHTML = arrayPreguntas [1][3];
+                    document.getElementById("respuesta4").innerHTML = arrayPreguntas [1][4];
+                    arrayPreguntasRepes.push(numero);
+                   
+                }else if (numero == 3){
+                    document.getElementById("pregunta").innerHTML = arrayPreguntas[2][0];
+                    document.getElementById("respuesta1").innerHTML = arrayPreguntas[2][1];
+                    document.getElementById("respuesta2").innerHTML = arrayPreguntas[2][2];
+                    document.getElementById("respuesta3").innerHTML = arrayPreguntas[2][3];
+                    document.getElementById("respuesta4").innerHTML = arrayPreguntas[2][4];
+                    arrayPreguntasRepes.push(numero);
+                   
+                }else if (numero == 4){
+                    document.getElementById("pregunta").innerHTML = arrayPreguntas[3][0];
+                    document.getElementById("respuesta1").innerHTML = arrayPreguntas[3][1];
+                    document.getElementById("respuesta2").innerHTML = arrayPreguntas[3][2];
+                    document.getElementById("respuesta3").innerHTML = arrayPreguntas[3][3];
+                    document.getElementById("respuesta4").innerHTML = arrayPreguntas[3][4];
+                    arrayPreguntasRepes.push(numero);
+                   
+                }else if (numero == 5){
+                    document.getElementById("pregunta").innerHTML = arrayPreguntas[4][0];
+                    document.getElementById("respuesta1").innerHTML = arrayPreguntas[4][1];
+                    document.getElementById("respuesta2").innerHTML = arrayPreguntas[4][2];
+                    document.getElementById("respuesta3").innerHTML = arrayPreguntas[4][3];
+                    document.getElementById("respuesta4").innerHTML = arrayPreguntas[4][4];
+                    arrayPreguntasRepes.push(numero);
+                   
+                }else if (numero == 6){
+                    document.getElementById("pregunta").innerHTML = arrayPreguntas[5][0];
+                    document.getElementById("respuesta1").innerHTML = arrayPreguntas[5][1];
+                    document.getElementById("respuesta2").innerHTML = arrayPreguntas[5][2];
+                    document.getElementById("respuesta3").innerHTML = arrayPreguntas[5][3];
+                    document.getElementById("respuesta4").innerHTML = arrayPreguntas[5][4];
+                    arrayPreguntasRepes.push(numero);
+                   
+                }else if (numero == 7){
+                    document.getElementById("pregunta").innerHTML = arrayPreguntas[6][0];
+                    document.getElementById("respuesta1").innerHTML = arrayPreguntas[6][1];
+                    document.getElementById("respuesta2").innerHTML = arrayPreguntas[6][2];
+                    document.getElementById("respuesta3").innerHTML = arrayPreguntas[6][3];
+                    document.getElementById("respuesta4").innerHTML = arrayPreguntas[6][4];
+                    arrayPreguntasRepes.push(numero);
+                   
+                }else if (numero == 8){
+                    document.getElementById("pregunta").innerHTML = arrayPreguntas[7][0];
+                    document.getElementById("respuesta1").innerHTML = arrayPreguntas[7][1];
+                    document.getElementById("respuesta2").innerHTML = arrayPreguntas[7][2];
+                    document.getElementById("respuesta3").innerHTML = arrayPreguntas[7][3];
+                    document.getElementById("respuesta4").innerHTML = arrayPreguntas[7][4];
+                    arrayPreguntasRepes.push(numero);
+                   
+                }else if (numero == 9){
+                    document.getElementById("pregunta").innerHTML = arrayPreguntas[8][0];
+                    document.getElementById("respuesta1").innerHTML = arrayPreguntas[8][1];
+                    document.getElementById("respuesta2").innerHTML = arrayPreguntas[8][2];
+                    document.getElementById("respuesta3").innerHTML = arrayPreguntas[8][3];
+                    document.getElementById("respuesta4").innerHTML = arrayPreguntas[8][4];
+                    arrayPreguntasRepes.push(numero);
+                   
+                }else if (numero == 10){
+                    document.getElementById("pregunta").innerHTML = arrayPreguntas[9][0];
+                    document.getElementById("respuesta1").innerHTML = arrayPreguntas[9][1];
+                    document.getElementById("respuesta2").innerHTML = arrayPreguntas[9][2];
+                    document.getElementById("respuesta3").innerHTML = arrayPreguntas[9][3];
+                    document.getElementById("respuesta4").innerHTML = arrayPreguntas[9][4];
+                    arrayPreguntasRepes.push(numero);
+                   
+                }
+                
+                
+                const longitud = 10;                                                //Declaro la longitud esperada para compararla con el array de preguntas repetidas y ver si es igual que se acabe el juego y salga la pantalla de fin.
+                const tamano = arrayPreguntasRepes.length === longitud;  
+                if(tamano == true){
+                    fin.style.display = 'block';
+                    juegoPrincipal.style.display = 'none';
+                    pantallaInicio.style.display = 'none';
+                }
+          
+                }
+                
+            }
+            var puntosFinal = document.getElementById("puntosFinal");
+            var aciertos = document.getElementById("aciertos");     //Declaro las variables dde puntos, aciertos y fallos
+            var fallos = document.getElementById("fallos");
+            
+            var puntosFinal = 0;
+            var aciertos = 0;           //Las inicializo a 0 y las pongo de tipo var, para que su valor pueda cambiarse
+            var fallos = 0;
+
+            var puntuacion = 0;
+            document.getElementById("puntos").textContent = puntuacion; //Con textContent actualizamos el valor de puntos
+
+
+            //FUNCION PARA COMPROBAR SI EL RESULTADO ES VERDERO O FALSO;
+
+            function compruebaVerdadero(){     
+                
+                                          
+                
+                const valorCorrecto = this.textContent; //Con this, hacemos referencia al elemento seleccionado
+                const divRespuesta = this;
+                
+                if(arrayCorrecto.includes(valorCorrecto)){      //Si el arrayCorrecto incliye las preguntas y respuestas correctas que haga lo siguiente
+                   
+                    divRespuesta.style.backgroundColor = "green";   //Fondo de la respuesta de color verde
+                    sonidos(valorCorrecto);                         //Llama a la funcion sonidos, que regula el sonido y tiempos de la musica y demás efectos
+                    puntuacion += 1;                               //Se incrementa el valor de la puntuacion
+                    document.getElementById("puntos").textContent = puntuacion      //Se actualiza el valor
+                    puntosFinal += 1;                                              //Se añade a la puntuacion final
+                    document.getElementById("puntosFinal").textContent = puntosFinal    //Se actualiza la puntuacion
+                    aciertos += 1;                                                  //Se suma +1 a los aciertos
+                    document.getElementById("aciertos").textContent = aciertos;     //Se actualizan los aciertos
+
+                    setTimeout( function(){
+                        resetearContador();     //Se ralentiza el código, para que se reseteer el contado, se llame otra vez al numero Random y se ponga el color del fondo como default ("");
+                        numeroRandom();         
+                        divRespuesta.style.backgroundColor = "";
+                   },750);
+                
+                }else { //Para el resto de casos (si es falso)
+                    
+                    divRespuesta.style.backgroundColor = "red";     //Fondo de respuesta de color de rojo
+                    sonidos(valorCorrecto);                         //Llama a la funcion sonidos para lo mismo de antes
+                    
+                        puntuacion -= 1;                           //Se resta 1 a la puntuacion
+                        document.getElementById("puntos").textContent = puntuacion; //Se actualiza la puntuacoon
+
+                        puntosFinal -= 1;                          //Se resta 1 a la puntuacion final
+                        document.getElementById("puntosFinal").textContent = puntosFinal;     //Se actualiza
+                        fallos +=1;                                 //Se suma +1 a los fallos
+                        document.getElementById("fallos").textContent = fallos;     //Se actualiza fallos
+                         setTimeout( function(){
+                            resetearContador();
+                            numeroRandom();         //Se ralentiza el código, para que se reseteer el contado, se llame otra vez al numero Random y se ponga el color del fondo como default ("");
+                            divRespuesta.style.backgroundColor = "";
+                   },750);
+
+                }   
+            
+            }
+            
+           document.getElementById("respuesta1").addEventListener("click", compruebaVerdadero);     //Se crean eventos para que cada vez que se haga click en la respuesta llame a comprobar si es verdadera o no la eleccion del usuario.
+           document.getElementById("respuesta2").addEventListener("click", compruebaVerdadero);
+           document.getElementById("respuesta3").addEventListener("click", compruebaVerdadero);
+           document.getElementById("respuesta4").addEventListener("click", compruebaVerdadero);
+            
+           
+          
+            //CONSTANTES DE SONIDOS DE VOLUMEN, FALLO Y ACIERTO
+           const vol = document.getElementById("musica");
+           const  fallo = document.getElementById("fallo");
+           const acierto = document.getElementById("acierto");
+            
+            
+           fallo.volume = 0;
+           acierto.volume = 0;
+            
+           function sonidos(valorCorrecto){
+            fallo.volume = 0.3;
+            acierto.volume = 0.3;           //Se dan valores a los sonidos
+            musica.volume = 0.3;
+            if (arrayCorrecto.includes(valorCorrecto)) {
+               musica.pause();  //Pausa la musica
+               acierto.play();  //Suena el sonido de acierto
+               setTimeout(function(){
+                musica.play();      //Se ralentiza la vuelta a sonar de la musica
+               }, 1000);
+            }else {
+                musica.pause(); //Pausa la musica
+                fallo.play();   //Suena el sonido de acierto
+                setTimeout(function(){
+                    musica.play();   //Se ralentiza la vuelta a sonar de la musica
+                },1000);
+            }
+
+           }
+         
+
+           //FUNCIÓN DEL TIEMPO DEL CONTADOR
+          function tiempoContador() {   
+            document.getElementById("tiempo").textContent = contador;
+            contador--; //Hacemos que vaya decreciendo
+            
+            if (contador < 0 ) { //Digo que es menor que 0 para que se vea el 0 en el juego
+              clearInterval(intervalo);                      // detiene la cuenta regresiva
+              numeroRandom();
+              contador = 15;                                 // reinicia el contador a 15 segundos
+              intervalo = setInterval(tiempoContador, 1000); // inicia el intervalo de nuevo al segundo
+            }
+          
+        }
+          
+           var contador = 15;    //Variable del contador
+           let intervalo = setInterval(tiempoContador, 1000);
+
+            
+            function resetearContador(){
+                contador = 15;  //Establece el contador a 15
+            }
+             
+            
+        window.onload =function(){ //Cuando cargue la pagina que se llame a la funcion numero random y empiece el juego.
+            numeroRandom();
+        }
+        
+       
+    </script>
+ 
+
+</body>
+</html>
